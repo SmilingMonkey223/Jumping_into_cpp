@@ -5,19 +5,19 @@ using namespace std;
 
 void createBoard(vector<vector<char>> &board, int height, int width);
 bool checkValidMove(vector<vector<char>> &board, int height, int userInput);
-void updateBoard(vector<vector<char>> &board, int height, int width,
-                 int userInput);
+void updateBoard(vector<vector<char>> &board, int height, int userInput,
+                 int width);
 
 int main() {
   vector<vector<char>> board;
-  int height, width, userInput;
+  int height, width, userInput, turn;
   cout << " ^-^ Welcome to my Version of the game Connect-4 ^-^ \n";
   cout << "P1 is + and P2 is x, Please input the height and width of the game "
           "you guys want to create, it has to be a minimum of 4x4 obviously \n";
   while (height <= 4 && width <= 4) {
     cin >> height >> width;
   }
-
+  turn = height * width;
   createBoard(vector<vector<char>> board, height, width);
   cout << "P1 please make ur move, write the number where you want to place ur "
           "symbol \n";
@@ -28,6 +28,12 @@ int main() {
     cin >> userInput;
   }
   updateBoard();
+  while (checkValidMove(userInput) = false {
+    cout << "That was an invalid move, your input has to be a number between 1 "
+            "and the width of the game \n";
+    cin >> userInput;
+    updateBoard();
+    }
 }
 
 void createBoard(vector<vector<char>> &board, int height, int width) {
@@ -39,13 +45,14 @@ void createBoard(vector<vector<char>> &board, int height, int width) {
   cout << vector<vector<char>> & board;
 }
 
-bool checkValidMove(vector<vector<char>> &board, int userInput, int height) {
-  for (int i = height; i <= 0; i--) {
-    if (board[i][userInput] == '_') {
+bool checkValidMove(vector<vector<char>> &board, int height, int userInput) {
+  for (int i = height; i >= 0; i--) {
+    if (board[height][userInput] == '_') {
       return true;
     }
   }
   return false;
 }
 
-void updateBoard()
+void updateBoard(vector<vector<char>> &board, int height, int userInput,
+                 int width) {}
