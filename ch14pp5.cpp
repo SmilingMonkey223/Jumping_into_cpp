@@ -17,22 +17,27 @@ int main() {
   while (height <= 4 && width <= 4) {
     cin >> height >> width;
   }
-  turn = height * width;
+  turn = 0;
   createBoard(vector<vector<char>> board, height, width);
   cout << "P1 please make ur move, write the number where you want to place ur "
           "symbol \n";
   cin >> userInput;
-  while (checkValidMove(userInput) = false) {
-    cout << "That was an invalid move, input a number that is between 1 and "
-            "the width you used to determine the game size \n";
-    cin >> userInput;
-  }
-  updateBoard();
-  while (checkValidMove(userInput) = false {
-    cout << "That was an invalid move, your input has to be a number between 1 "
-            "and the width of the game \n";
-    cin >> userInput;
-    updateBoard();
+  while (checkValidMove(userInput, height, vector<vector<char>> board))
+    = false {
+      cout << "That was an invalid move, your input has to be a number between "
+              "1 "
+              "and the width of the game \n";
+      cin >> userInput;
+    }
+  updateBoard(userInput, height, width, vector<vector<char>> board);
+  cout << "P2 please make ur move, write the number where you want to place ur "
+          "symbol \n";
+  while (checkValidMove(userInput, height, vector<vector<char>> board))
+    = false {
+      cout << "That was an invalid move, your input has to be a number between "
+              "1 "
+              "and the width of the game \n";
+      cin >> userInput;
     }
 }
 
@@ -55,4 +60,12 @@ bool checkValidMove(vector<vector<char>> &board, int height, int userInput) {
 }
 
 void updateBoard(vector<vector<char>> &board, int height, int userInput,
-                 int width) {}
+                 int width) {
+  for (int i = height; i >= 0; i--) {
+    if (board[height][userInput] == '_' && turn % 2 == 0) {
+      board[height][userInput] = '+';
+    } else {
+      board[height][userInput] = 'x';
+    }
+  }
+}
