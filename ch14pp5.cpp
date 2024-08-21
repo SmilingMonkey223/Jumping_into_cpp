@@ -7,6 +7,7 @@ void createBoard(vector<vector<char>> &board, int height, int width);
 bool checkValidMove(vector<vector<char>> &board, int height, int userInput);
 void updateBoard(vector<vector<char>> &board, int height, int userInput,
                  int width);
+bool checkWin(vector<vector<char>> &board);
 
 int main() {
   vector<vector<char>> board;
@@ -30,6 +31,7 @@ int main() {
       cin >> userInput;
     }
   updateBoard(userInput, height, width, vector<vector<char>> board);
+  checkWin();
   cout << "P2 please make ur move, write the number where you want to place ur "
           "symbol \n";
   while (checkValidMove(userInput, height, vector<vector<char>> board))
@@ -39,6 +41,8 @@ int main() {
               "and the width of the game \n";
       cin >> userInput;
     }
+  updateBoard(userInput, height, width, vector<vector<char>> board);
+  checkWin();
 }
 
 void createBoard(vector<vector<char>> &board, int height, int width) {
@@ -64,8 +68,38 @@ void updateBoard(vector<vector<char>> &board, int height, int userInput,
   for (int i = height; i >= 0; i--) {
     if (board[height][userInput] == '_' && turn % 2 == 0) {
       board[height][userInput] = '+';
-    } else {
+    }
+    if (board[height][userInput] == '_' && turn % 2 == 1) {
       board[height][userInput] = 'x';
+    }
+  }
+}
+
+bool checkWin_X(vector<vector<char>> &board, int width, int height) {
+  for (int i = 0; i < height; i++) {
+    bool win = false;
+    for (int j = 3; j < width; j++) {
+      if (board[i][j] == 'x' && board[i][j - 1] == 'x' &&
+          board[i][j - 2] == 'x' && board[i][j - 3] == 'x') {
+        win = true;
+      }
+    }
+    if (win == true) {
+      cout << "Congratulations P2 you won the game!\n";
+      return 0;
+    }
+  }
+  for (int i = 3; i < height; i++) {
+    bool win = false;
+    for (int j = 0; j < width; j++) {
+      if (board[i][j] == 'x' && board[i - 1][j] == 'x' &&
+          board[i - 2][j] == 'x' && board[i - 3][j] == 'x') {
+        win = true;
+      }
+    }
+    if (win == true) {
+      cout << "Congratulations P2 you won the game!\n";
+      return 0;
     }
   }
 }
