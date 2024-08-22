@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void createBoard(vector<vector<char>> board, int height, int width);
+void createBoard(vector<vector<char>> &board, int height, int width);
 bool checkValidMove(vector<vector<char>> &board, int height, int userInput);
 void updateBoard(vector<vector<char>> &board, int height, int userInput,
                  int width);
@@ -11,56 +11,59 @@ bool checkWin(vector<vector<char>> &board);
 
 int main() {
   vector<vector<char>> board;
-  int height, width, userInput, turn;
+  int height, width, userInput, turn = 0;
   cout << " ^-^ Welcome to my Version of the game Connect-4 ^-^ \n";
   cout << "P1 is + and P2 is x, Please input the height and width of the game "
           "you guys want to create, it has to be a minimum of 4x4 obviously \n";
   cin >> height >> width;
-  while (height <= 4 || width <= 4) {
-    cout << "That is an invalid height or width, please create a board that is "
+  while (height < 4 || width < 4) {
+    cout << "That is an invalid height or width, please create a board that "
+            "is "
             "atleast 4x4 \n";
     cin >> height >> width;
   }
-  turn = 0;
-  while (checkWin(vector<vector<char>> & board) = false) {
-    createBoard(board, height, width);
-    cout << "P1 please make ur move, write the number where you want to place "
-            "ur "
-            "symbol \n";
-    cin >> userInput;
-    while (checkValidMove(userInput, height, vector<vector<char>> board))
-      = false {
-        cout << "That was an invalid move, your input has to be a number "
-                "between "
-                "1 "
-                "and the width of the game \n";
-        cin >> userInput;
-      }
-    updateBoard(userInput, height, width, vector<vector<char>> board);
-    checkWin_X();
-    cout << "P2 please make ur move, write the number where you want to place "
-            "ur "
-            "symbol \n";
-    while (checkValidMove(userInput, height, vector<vector<char>> board))
-      = false {
-        cout << "That was an invalid move, your input has to be a number "
-                "between "
-                "1 "
-                "and the width of the game \n";
-        cin >> userInput;
-      }
-    updateBoard(userInput, height, width, vector<vector<char>> board);
-    checkWin_Y();
-  }
+}
+createBoard(board, height, width);
+while (checkWin(vector<vector<char>> & board) == false) {
+  cout << "P1 please make ur move, write the number where you want to place "
+          "ur "
+          "symbol \n";
+  cin >> userInput;
+  while (checkValidMove(userInput, height, vector<vector<char>> board))
+    == false {
+      cout << "That was an invalid move, your input has to be a number "
+              "between "
+              "1 "
+              "and the width of the game \n";
+      cin >> userInput;
+    }
+  updateBoard(userInput, height, width, vector<vector<char>> board);
+  checkWin_X();
+  cout << "P2 please make ur move, write the number where you want to place "
+          "ur "
+          "symbol \n";
+  while (checkValidMove(userInput, height, vector<vector<char>> board))
+    = false {
+      cout << "That was an invalid move, your input has to be a number "
+              "between "
+              "1 "
+              "and the width of the game \n";
+      cin >> userInput;
+    }
+  updateBoard(userInput, height, width, vector<vector<char>> board);
+  checkWin_Y();
+}
 }
 
 void createBoard(vector<vector<char>> &board, int height, int width) {
+  board.resize(height, vector<char>(width, '_'));
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
       board[i][j] = '_';
+      cout << board[i][j] << '_';
     }
+    cout << endl;
   }
-  cout << vector<vector<char>> & board;
 }
 
 bool checkValidMove(vector<vector<char>> &board, int height, int userInput) {
@@ -85,6 +88,7 @@ void updateBoard(vector<vector<char>> &board, int height, int userInput,
 }
 
 bool checkWin_X(vector<vector<char>> &board, int width, int height) {
+  // doesnt check for diagonal //
   for (int i = 0; i < height; i++) {
     bool win = false;
     for (int j = 3; j < width; j++) {
@@ -113,6 +117,7 @@ bool checkWin_X(vector<vector<char>> &board, int width, int height) {
   }
 }
 bool checkWin_Y(vector<vector<char>> &board, int width, int height) {
+  // doesnt check for diagonal //
   for (int i = 0; i < height; i++) {
     bool win = false;
     for (int j = 3; j < width; j++) {
