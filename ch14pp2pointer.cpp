@@ -7,9 +7,9 @@ void multiplication_table_2D(int num_1, int num_2, int **user_table) {
   for (size_t i = 0; i < num_1; i++) {
     for (size_t j = 0; j < num_2; j++) {
       user_table[i][j] = (i + 1) * (j + 1);
-      cout << user_table[i][j] << "\t"; // Print each number followed by a tab
+      cout << user_table[i][j] << "\t";
     }
-    cout << endl; // New line after each row
+    cout << endl;
   }
 }
 void multiplication_table_3D(int length, int width, int height,
@@ -21,7 +21,7 @@ void multiplication_table_3D(int length, int width, int height,
         cout << user_table[i][j][k] << "\t";
       }
     }
-    cout << endl; // New line after each row
+    cout << endl;
   }
 }
 int main() {
