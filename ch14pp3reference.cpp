@@ -8,13 +8,13 @@ void createArray(vector<vector<int>> &array, int val_1, int val_2);
 int main() {
   vector<vector<int>> array;
   int val_1, val_2;
-  cout << "Give me 2 value for a 2D Array \n";
+  cout << "Give me 2 value for a 2D Array of their memory addresses \n";
   cin >> val_1 >> val_2;
   createArray(array, val_1, val_2);
   return 0;
 }
 
-void createArray(vector<vector<int>> &array, int val_1, int val_2) {
+voidcreateArray(vector<vector<int>> &array, int val_1, int val_2) {
   int x;
   array.resize(val_1, vector<int>(val_2));
   for (int i = 0; i < val_1; i++) {
