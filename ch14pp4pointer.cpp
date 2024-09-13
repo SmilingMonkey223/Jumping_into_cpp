@@ -1,17 +1,20 @@
 #include <algorithm>
+#include <ios>
 #include <iostream>
-#include <iterator>
+#include <limits>
 #include <map>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-void addFriend(map<string, int> *userbase);
-void updateFriend(map<string, int> *userbase);
+void addFriend(map<string, int> *userbase, string name, int lastTimeSpokenTo);
+void updateFriend(map<string, int> *userbase, string name,
+                  int lastTimeSpokenTo);
 bool FriendExists(string name, map<string, int> *userbase);
 void displaySorted(map<string, int> *userbase,
-                   vector<pair<string, int>> *sortedUserbase);
+                   vector<pair<string, int>> *sortedUserbase,
+                   int lastTimeSpokenTo, string name);
 
 int main() {
   string name;
@@ -31,17 +34,22 @@ int main() {
             "by when you last talked to them \n";
     cout << "Enter 4 to quit the Program \n";
     cin >> input;
+    while (!(cin >> input)) {
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      cout << "You can only input numbers, give me a number between 1-4 \n";
+    }
     if (input == 4)
       break;
     switch (input) {
     case 1:
-      addFriend(&userbase);
+      addFriend(&userbase, name, lastTimeSpokenTo);
       break;
     case 2:
-      updateFriend(&userbase);
+      updateFriend(&userbase, name, lastTimeSpokenTo);
       break;
     case 3:
-      displaySorted(&userbase, &sortedUserbase);
+      displaySorted(&userbase, &sortedUserbase, lastTimeSpokenTo, name);
       break;
     default:
       cout << "Invalid input, please input a number between 1-4 \n";
@@ -53,8 +61,8 @@ void addFriend(map<string, int> *userbase, string name, int lastTimeSpokenTo) {
   cout << "What is the name of your friend? \n";
   cin >> name;
   while (true) {
-    if (!FriendExists(name, &userbase)) {
-      cout "And when have you last spoken to that person? (in days) \n";
+    if (!FriendExists(name, userbase)) {
+      cout << "And when have you last spoken to that person? (in days) \n";
       cin >> lastTimeSpokenTo;
       userbase->insert({name, lastTimeSpokenTo});
       cout << "Your friend has been added to the userbase \n";
@@ -68,31 +76,34 @@ void addFriend(map<string, int> *userbase, string name, int lastTimeSpokenTo) {
   }
 }
 
-void updateFriend(map<string, int> *userbase, string name,
-                  int lastTimeSpokenTo) {
-  if (FriendExists(name, *userbase)) {
-    cout << "And when have you last spoken to that person? (in days) \n";
-    cin >> lastTimeSpokenTo;
-    userbase->at({name, lastTimeSpokenTo});
-    cout << "The last time you have talked to this person has been updated \n";
-  }
-}
-
 bool FriendExists(string name, map<string, int> *userbase) {
   if (userbase->find(name) != userbase->end()) {
     return true;
   }
   return false;
 }
-
-void displaySorted(map<string, int> *userbase,
-                   vector<pair<string, int>> *sortedUserbase) {
-  for (int i = 0; i < size(userbase); i++) {
-    sortedUserbase[i] = userbase[i];
+void updateFriend(map<string, int> *userbase, string name,
+                  int lastTimeSpokenTo) {
+  if (FriendExists(name, userbase)) {
+    cout << "And when have you last spoken to that person? (in days) \n";
+    cin >> lastTimeSpokenTo;
+    userbase->operator[](name) = lastTimeSpokenTo;
+    cout << "The last time you have talked to this person has been updated \n";
   }
-  sort(sortedUserbase.begin(), sortedUserbase.end(),
+}
+void displaySorted(map<string, int> *userbase,
+                   vector<pair<string, int>> *sortedUserbase,
+                   int lastTimeSpokenTo, string name) {
+  sortedUserbase->clear();
+  // copy values from map to vector
+  for (const auto &entry : *userbase) {
+    sortedUserbase->push_back(entry);
+  }
+
+  sort(sortedUserbase->begin(), sortedUserbase->end(),
        [](auto &left, auto &right) { return left.second < right.second; });
-  for (int i = 0; i < size(sortedUserbase); i++) {
-    cout << sortedUserbase[i] << endl;
+  for (const auto &entry : *sortedUserbase) {
+    cout << "Friend " << entry.first << " has last been spoken to "
+         << entry.second << " Days ago \n";
   }
 }
