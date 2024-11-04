@@ -11,6 +11,7 @@ struct number {
 };
 
 number *p_numbers = nullptr;
+
 number *getNewNumber(int element) {
   number *p_number = new number;
   p_number->element = element;
